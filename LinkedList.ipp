@@ -8,50 +8,83 @@
 // LinkedList<T> class.
 template <class T>
 LinkedList<T>::LinkedList(){
-  //TODO
+  dummyNode = new Node();
+  dummyNode->next = dummyNode;
+  dummyNode->prev = dummyNode;
+  numItems = 0;
 }
 
 template <class T>
 LinkedList<T>::~LinkedList() {
-  //TODO
+  while(numItems > 0)
+	remove(0);
+
+  dummyNode = NULL;
+  delete[] dummyNode;
 }
 
 template <class T>
 typename LinkedList<T>::Node* LinkedList<T>::find(unsigned long i){
-  //TODO
-  return NULL;
+	if(i == numItems)
+		return dummyNode;
+	else if (i > numItems)
+		throw std::string("ERROR: List does not contain such index.");
+	else{
+		Node* p;
+		p = dummyNode->next;
+		for(unsigned int j = 0; j < i; j++){
+				p = p->next;
+		}
+		return (p);
+	}
 }
 
 template <class T>
 void LinkedList<T>::set(unsigned long i, T x){
-  //TODO
+  Node* u = find(i);
+  u->data = x;
 }
 
 template <class T>
 void LinkedList<T>::add(unsigned long i, T x){
-  //TODO
+	numItems++;
+	if (i >= numItems)
+		throw std::string("ERROR: List does not contain such index. (add)");
+
+	Node* newNode = new Node();
+	newNode->data = x;
+	
+	Node *b = find(i);
+	b->prev->next = newNode;
+	newNode->next = b;
+	newNode->prev = b->prev;
+	b->prev = newNode;
 }
 
 template <class T>
 void LinkedList<T>::remove(unsigned long i){
-  //TODO
+	if(i >= numItems){
+		throw std::string("ERROR: List does not contain such index.");
+	}
+
+	Node *w = find(i);
+	w->prev->next = w->next;
+	w->next->prev = w->prev;
+	w = NULL;
+	delete w;
+	numItems--;
 }
 
 template <class T>
 T LinkedList<T>::get(unsigned long i){
-  //TODO -- The code that is here is a useless stub, you probably
-  // want to delete it
-  Node junkNode;
-  return junkNode.data; //This is unitialized data
-}
-
-template <class T>
-void LinkedList<T>::splice(unsigned long i, unsigned long len, LinkedList<T>& target, unsigned long t){
-  //TODO
+	Node* w = find(i);
+	if(w == dummyNode)
+		throw std::string("ERROR: List does not contain such index.");
+	else
+		return w->data;
 }
 
 template <class T>
 unsigned long LinkedList<T>::size(){
-  //TODO
-  return 0;
+  return numItems;
 }

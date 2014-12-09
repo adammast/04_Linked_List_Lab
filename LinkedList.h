@@ -41,7 +41,7 @@ class LinkedList : public List <T> {
   // is {3, 5}, the result should be that the current list is {4, 1, 2, 3, 5} and src is
   // empty
   //Note: This should be O(1) time. Use pointer manipulations to graft the lists together.
-  virtual void takeAll(LinkedList<T>& src);
+  //virtual void takeAll(LinkedList<T>& src);
 
   //Initialize all private member variables.
   // Be sure to create the dummy node using "new"
